@@ -1,0 +1,35 @@
+spring:
+  application:
+    name:
+      devcord-backend
+
+  config:
+    import: optional:file:.env[.properties]
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER_NAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    com.junwoo.devcordbackend: info
+    org.hibernate.sql: info
+    org.springframework.security: trace
+
+springdoc:
+  packages-to-scan: com.junwoo.devcordbackend.controller
+  paths-to-match: /**
+
+jwt:
+  secret: ${JWT_SECRET}  # ?? ?? ??
+  access-token-expiration: 1800000   # 30?
+  refresh-token-expiration: 604800000 # 7?
