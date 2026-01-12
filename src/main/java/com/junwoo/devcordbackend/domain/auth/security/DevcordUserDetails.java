@@ -1,6 +1,6 @@
 package com.junwoo.devcordbackend.domain.auth.security;
 
-import com.junwoo.devcordbackend.domain.auth.dto.UserDTO;
+import com.junwoo.devcordbackend.domain.auth.dto.AuthDTO;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,16 +19,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DevcordUserDetails implements UserDetails {
 
-    private final UserDTO userDTO;
+    private final AuthDTO user;
     private final String password;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_".concat(userDTO.role().name())));
+        return List.of(new SimpleGrantedAuthority("ROLE_".concat(user.role().name())));
     }
 
     @Override
     public String getUsername() {
-        return userDTO.email();
+        return user.email();
     }
 }

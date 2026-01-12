@@ -1,5 +1,6 @@
 package com.junwoo.devcordbackend.config.exception;
 
+import com.junwoo.devcordbackend.domain.auth.exception.AuthException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
@@ -67,6 +68,18 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
+                .body(response);
+    }
+
+    @ExceptionHandler(AuthException.class)
+    public ResponseEntity<ErrorResponse> handleAuthException(AuthException exception) {
+
+        log.error("[GlobalException] 인증 문제 발생: {}", exception.getMessage(), exception);
+
+        ErrorResponse response = new ErrorResponse(exception);
+
+        return ResponseEntity
+                .status(exception.getErrorCode().getCode())
                 .body(response);
     }
 }

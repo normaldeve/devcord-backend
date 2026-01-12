@@ -1,5 +1,7 @@
 package com.junwoo.devcordbackend.domain.auth.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 /**
  *
  * @author junnukim1007gmail.com
