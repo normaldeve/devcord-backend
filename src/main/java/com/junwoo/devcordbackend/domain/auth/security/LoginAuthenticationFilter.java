@@ -8,8 +8,10 @@ import com.junwoo.devcordbackend.domain.auth.exception.AuthException;
 import com.junwoo.devcordbackend.domain.auth.dto.LoginRequest;
 import com.junwoo.devcordbackend.domain.auth.dto.TokenResponse;
 import com.junwoo.devcordbackend.domain.auth.jwt.JwtTokenProvider;
+import com.junwoo.devcordbackend.domain.auth.service.RefreshTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -35,15 +37,18 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
 
     private final ObjectMapper objectMapper;
     private final JwtTokenProvider jwtTokenProvider;
+    private final RefreshTokenService refreshTokenService;
 
     public LoginAuthenticationFilter(
             AuthenticationManager authenticationManager,
             ObjectMapper objectMapper,
-            JwtTokenProvider jwtTokenProvider
+            JwtTokenProvider jwtTokenProvider,
+            RefreshTokenService refreshTokenService
     ) {
         super(authenticationManager);
         this.objectMapper = objectMapper;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.refreshTokenService = refreshTokenService;
         setFilterProcessesUrl("/api/auth/login");
     }
 
@@ -77,14 +82,22 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
         String accessToken = jwtTokenProvider.createAccessToken(user);
         String refreshToken = jwtTokenProvider.createRefreshToken(user.email());
 
-        TokenResponse tokenResponse = new TokenResponse(accessToken, refreshToken, user);
+        refreshTokenService.save(user.email(), refreshToken, jwtTokenProvider.getRefreshTokenValidityInMilliseconds());
+
+        Cookie refreshTokenCookie = new Cookie("refresh_token", refreshToken);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setSecure(false);
+        refreshTokenCookie.setPath("/api/auth");
+        refreshTokenCookie.setMaxAge((int) (jwtTokenProvider.getRefreshTokenValidityInMilliseconds() / 1000));
+
+        response.addCookie(refreshTokenCookie);
 
         log.info("로그인에 성공했습니다 - email: {}, role: {}", user.email(), user.role());
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(objectMapper.writeValueAsString(tokenResponse));
+        response.getWriter().write(objectMapper.writeValueAsString(new TokenResponse(accessToken, user)));
     }
 
     @Override

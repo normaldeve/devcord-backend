@@ -27,5 +27,26 @@ services:
       timeout: 5s
       retries: 5
 
+  redis:
+    image: redis:7.2-alpine
+    container_name: devcord-redis
+    restart: unless-stopped
+
+    ports:
+      - "6379:6379"
+
+    command: redis-server --appendonly yes
+
+    volumes:
+      - devcord-redis-data:/data
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
 volumes:
   devcord-mysql-data:
+  devcord-redis-data:

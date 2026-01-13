@@ -13,6 +13,7 @@ public final class SecurityPassUrlList {
             "/api/auth/login",
             "/api/users/signup",
             "/swagger-ui/**",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**",
+            "/api/auth/refresh"
     };
 }
