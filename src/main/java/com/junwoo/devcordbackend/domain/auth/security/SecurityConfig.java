@@ -102,8 +102,6 @@ public class SecurityConfig {
     public RoleHierarchy roleHierarchy() {
         return RoleHierarchyImpl.withDefaultRolePrefix()
                 .role(Role.ADMIN.name())
-                .implies(Role.USER.name(), Role.CHANNEL_MANAGER.name())
-                .role(Role.CHANNEL_MANAGER.name())
                 .implies(Role.USER.name())
                 .build();
     }

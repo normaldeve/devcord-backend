@@ -1,6 +1,8 @@
 package com.junwoo.devcordbackend.domain.auth.security;
 
+import com.junwoo.devcordbackend.domain.auth.dto.AuthDTO;
 import com.junwoo.devcordbackend.domain.auth.jwt.JwtTokenProvider;
+import com.junwoo.devcordbackend.domain.user.entity.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,10 +42,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = resolveToken(request);
 
         if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
+            Long userId = jwtTokenProvider.getClaims(token).get("id", Long.class);
             String email = jwtTokenProvider.getEmailFromToken(token);
             String role = jwtTokenProvider.getClaims(token).get("role", String.class);
 
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, null, List.of(new SimpleGrantedAuthority("ROLE_" + role)));
+            AuthDTO user = AuthDTO.builder()
+                    .id(userId)
+                    .email(email)
+                    .role(Role.valueOf(role))
+                    .build();
+
+            DevcordUserDetails userDetails = new DevcordUserDetails(user, null);
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, List.of(new SimpleGrantedAuthority("ROLE_" + role)));
 
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
@@ -64,11 +75,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-
-        for (String pattern : SecurityPassUrlList.ALL) {
-            return pathMatcher.match(pattern, path);
-        }
-
-        return false;
+        return Arrays.stream(SecurityPassUrlList.ALL)
+                .anyMatch(pattern -> pathMatcher.match(pattern, path));
     }
 }

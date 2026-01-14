@@ -1,7 +1,6 @@
 package com.junwoo.devcordbackend.domain.room.entity;
 
 import com.junwoo.devcordbackend.config.entity.BaseEntity;
-import com.junwoo.devcordbackend.domain.room.dto.CreateServerRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -17,19 +16,22 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @Entity
-@Table(name = "servers")
+@Table(name = "server_members")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServerEntity extends BaseEntity {
+public class ServerMemberEntity extends BaseEntity {
 
-    private String name;
+    private Long serverId;
 
-    private String iconUrl;
+    private Long userId;
 
-    public static ServerEntity createServer(CreateServerRequest request) {
-        return ServerEntity.builder()
-                .name(request.serverName())
-                .iconUrl(request.iconUrl())
+    private ServerRole role;
+
+    public static ServerMemberEntity createServerManager(Long serverId, Long userId) {
+        return ServerMemberEntity.builder()
+                .serverId(serverId)
+                .userId(userId)
+                .role(ServerRole.CHANNEL_MANAGER)
                 .build();
     }
 }

@@ -26,8 +26,9 @@ logging:
     org.springframework.security: trace
 
 springdoc:
-  packages-to-scan: com.junwoo.devcordbackend.controller
+  packages-to-scan: com.junwoo.devcordbackend
   paths-to-match: /**
+  override-with-generic-response: false
 
 jwt:
   secret: ${JWT_SECRET}

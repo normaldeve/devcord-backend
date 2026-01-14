@@ -1,6 +1,7 @@
 package com.junwoo.devcordbackend.domain.room.entity;
 
 import com.junwoo.devcordbackend.config.entity.BaseEntity;
+import com.junwoo.devcordbackend.domain.room.dto.CreateChannelRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -30,4 +31,31 @@ public class ChannelEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ChannelType type;
 
+    public static ChannelEntity createTextChannel(Long serverId) {
+        return ChannelEntity.builder()
+                .serverId(serverId)
+                .name("일반")
+                .type(ChannelType.TEXT)
+                .build();
+    }
+
+    public static ChannelEntity createVoiceChannel(Long serverId) {
+        return ChannelEntity.builder()
+                .serverId(serverId)
+                .name("일반")
+                .type(ChannelType.VOICE)
+                .build();
+    }
+
+    public static ChannelEntity createChannel(Long serverId, CreateChannelRequest request) {
+        return ChannelEntity.builder()
+                .serverId(serverId)
+                .name(request.channelName())
+                .type(request.channelType())
+                .build();
+    }
+
+    public void renameChannel(String newName) {
+        this.name = newName;
+    }
 }

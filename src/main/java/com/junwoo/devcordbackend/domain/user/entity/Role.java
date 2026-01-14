@@ -7,6 +7,5 @@ package com.junwoo.devcordbackend.domain.user.entity;
  */
 public enum Role {
     ADMIN,
-    CHANNEL_MANAGER,
     USER
 }

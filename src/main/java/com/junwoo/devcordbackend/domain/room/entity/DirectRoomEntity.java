@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "direct_rooms")
 @NoArgsConstructor
-@AllArgsConstructor
-public class DirectRoom extends BaseEntity {
+public class DirectRoomEntity extends BaseEntity {
 
 }
