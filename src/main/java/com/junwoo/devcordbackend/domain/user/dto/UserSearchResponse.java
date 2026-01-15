@@ -13,11 +13,4 @@ public record UserSearchResponse(
         String profileUrl
 ) {
 
-    public static UserSearchResponse from(UserEntity entity) {
-        return new UserSearchResponse(
-                entity.getId(),
-                entity.getNickname(),
-                entity.getProfileUrl()
-        );
-    }
 }

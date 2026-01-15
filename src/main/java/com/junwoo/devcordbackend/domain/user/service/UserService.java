@@ -67,7 +67,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<UserSearchResponse> searchUsers(Long myId, String keyword) {
         return userRepository.searchUsers(myId, keyword).stream()
-                .map(UserSearchResponse::from)
+                .map(userMapper::toUserSearchRespose)
                 .toList();
     }
 }
