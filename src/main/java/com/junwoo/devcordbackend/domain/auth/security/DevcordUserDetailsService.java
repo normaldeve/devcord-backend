@@ -28,6 +28,7 @@ public class DevcordUserDetailsService implements UserDetailsService {
         AuthDTO userDTO = new AuthDTO(
                 user.getId(),
                 user.getEmail(),
+                user.getNickname(),
                 user.getProfileUrl(),
                 false,
                 user.getRole()

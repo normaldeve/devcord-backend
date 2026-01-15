@@ -45,5 +45,4 @@ public class UserEntity extends BaseEntity {
                 .role(Role.USER)
                 .build();
     }
-
 }

@@ -14,6 +14,7 @@ public final class SecurityPassUrlList {
             "/api/users/signup",
             "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/api/auth/refresh"
+            "/api/auth/refresh",
+            "/api/auth/logout"
     };
 }

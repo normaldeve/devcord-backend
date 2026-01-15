@@ -1,17 +1,16 @@
 package com.junwoo.devcordbackend.domain.auth.controller;
 
-import com.junwoo.devcordbackend.config.exception.ErrorCode;
-import com.junwoo.devcordbackend.domain.auth.dto.TokenResponse;
-import com.junwoo.devcordbackend.domain.auth.exception.AuthException;
+import com.junwoo.devcordbackend.domain.auth.jwt.JwtTokenProvider;
 import com.junwoo.devcordbackend.domain.auth.service.AuthService;
-import com.junwoo.devcordbackend.domain.auth.service.RefreshTokenService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
 
 /**
  *
@@ -24,23 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/refresh")
     public ResponseEntity<String> refresh(
-            @RequestHeader("Authorization") String authorization
+            HttpServletRequest request,
+            HttpServletResponse response
     ) {
 
-        String refreshToken = extractToken(authorization);
+        String refreshToken = jwtTokenProvider.extractRefreshTokenFromCookie(request);
+
         String newAccessToken = authService.refreshAccessToken(refreshToken);
 
         return ResponseEntity.ok(newAccessToken);
-    }
-
-    private String extractToken(String header) {
-        if (!StringUtils.hasText(header) || !header.startsWith("Bearer ")) {
-            throw new AuthException(ErrorCode.INVALID_REFRESH_TOKEN);
-        }
-
-        return header.substring(7);
     }
 }

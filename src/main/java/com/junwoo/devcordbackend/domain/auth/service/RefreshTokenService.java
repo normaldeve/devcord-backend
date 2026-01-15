@@ -19,7 +19,7 @@ public class RefreshTokenService {
 
     private final RedisTemplate<String, String> redisTemplate;
 
-    private static final String PREFIX = "refresh: ";
+    private static final String PREFIX = "refresh:";
 
     public void save(String email, String refreshToken, long ttlMillis) {
         redisTemplate.opsForValue().set(
@@ -47,7 +47,7 @@ public class RefreshTokenService {
     public void delete(String email) {
         Boolean deleted = redisTemplate.delete(PREFIX + email);
 
-        if (Boolean.TRUE.equals(deleted)) {
+        if (deleted) {
             log.info("[RefreshTokenService] Refresh Token 삭제 - email={}", email);
         } else {
             log.info("[RefreshTokenService] Refresh Token 삭제 요청 (존재하지 않음) - email={}", email);

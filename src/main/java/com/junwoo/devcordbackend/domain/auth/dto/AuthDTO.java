@@ -12,6 +12,7 @@ import lombok.Builder;
 public record AuthDTO(
         Long id,
         String email,
+        String nickname,
         String profileUrl,
         Boolean online,
         Role role

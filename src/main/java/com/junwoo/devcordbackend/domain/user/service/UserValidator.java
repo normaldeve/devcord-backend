@@ -1,7 +1,12 @@
 package com.junwoo.devcordbackend.domain.user.service;
 
+import com.junwoo.devcordbackend.config.exception.ErrorCode;
+import com.junwoo.devcordbackend.domain.user.entity.FriendStatus;
+import com.junwoo.devcordbackend.domain.user.exception.FriendException;
+import com.junwoo.devcordbackend.domain.user.exception.UserException;
 import com.junwoo.devcordbackend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author junnukim1007gmail.com
  * @date 26. 1. 12.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserValidator {
@@ -17,7 +23,31 @@ public class UserValidator {
     private final UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public boolean checkEmailDuplicate(String email) {
-        return userRepository.existsByEmail(email);
+    public void checkEmailDuplicate(String email) {
+        if (userRepository.existsByEmail(email)) {
+            log.error("[UserValidator] 회원 가입 실패 - 이미 존재하는 이메일: {}", email);
+
+            throw new UserException(ErrorCode.ALREADY_EXISTS_EMAIL);
+        }
+    }
+
+    public void checkNicknameDuplicate(String nickname) {
+        if (userRepository.existsByNickname(nickname)) {
+            log.error("[UserValidator] 회원 가입 실패 - 이미 존재하는 닉네임: {}", nickname);
+
+            throw new UserException(ErrorCode.ALREADY_EXISTS_NICKNAME);
+        }
+    }
+
+    public void validateUserExists(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UserException(ErrorCode.CANNOT_FOUND_USER);
+        }
+    }
+
+    public void checkDuplicateFriendRequest(FriendStatus status) {
+        if (status != FriendStatus.PENDING) {
+            throw new FriendException(ErrorCode.ALREADY_COMPLETED_FRIEND_REQUEST);
+        }
     }
 }

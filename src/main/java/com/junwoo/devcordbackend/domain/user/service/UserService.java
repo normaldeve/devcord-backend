@@ -4,6 +4,7 @@ import com.junwoo.devcordbackend.config.exception.ErrorCode;
 import com.junwoo.devcordbackend.domain.auth.dto.AuthDTO;
 import com.junwoo.devcordbackend.domain.user.dto.SignupRequest;
 import com.junwoo.devcordbackend.domain.user.dto.SignupResponse;
+import com.junwoo.devcordbackend.domain.user.dto.UserSearchResponse;
 import com.junwoo.devcordbackend.domain.user.entity.UserEntity;
 import com.junwoo.devcordbackend.domain.user.exception.UserException;
 import com.junwoo.devcordbackend.domain.user.mapper.UserMapper;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,11 +36,9 @@ public class UserService {
     @Transactional
     public SignupResponse signup(SignupRequest request) {
 
-        if (userValidator.checkEmailDuplicate(request.email())) {
-            log.error("[Userservice] 회원 가입 실패 - 이미 존재하는 이메일: {}", request.email());
+        userValidator.checkEmailDuplicate(request.email());
 
-            throw new UserException(ErrorCode.ALREADY_EXISTS_EMAIL);
-        }
+        userValidator.checkNicknameDuplicate(request.nickname());
 
         UserEntity user = UserEntity.createUser(request, passwordEncoder);
 
@@ -62,5 +62,12 @@ public class UserService {
                 .orElseThrow(() -> new UserException(ErrorCode.CANNOT_FOUND_USER));
 
         return userMapper.toAuthDTO(userEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserSearchResponse> searchUsers(Long myId, String keyword) {
+        return userRepository.searchUsers(myId, keyword).stream()
+                .map(UserSearchResponse::from)
+                .toList();
     }
 }
