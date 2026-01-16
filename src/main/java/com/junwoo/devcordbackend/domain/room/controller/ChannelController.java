@@ -1,8 +1,7 @@
 package com.junwoo.devcordbackend.domain.room.controller;
 
 import com.junwoo.devcordbackend.domain.auth.dto.AuthDTO;
-import com.junwoo.devcordbackend.domain.auth.security.DevcordUserDetails;
-import com.junwoo.devcordbackend.domain.room.dto.ChannelResponse;
+import com.junwoo.devcordbackend.domain.auth.security.userdetail.DevcordUserDetails;
 import com.junwoo.devcordbackend.domain.room.dto.CreateChannelRequest;
 import com.junwoo.devcordbackend.domain.room.dto.RenameChannelRequest;
 import com.junwoo.devcordbackend.domain.room.dto.ServerChannelResponse;
@@ -18,8 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  *

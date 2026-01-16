@@ -1,6 +1,6 @@
 package com.junwoo.devcordbackend.domain.user.controller;
 
-import com.junwoo.devcordbackend.domain.auth.security.DevcordUserDetails;
+import com.junwoo.devcordbackend.domain.auth.security.userdetail.DevcordUserDetails;
 import com.junwoo.devcordbackend.domain.user.dto.SignupRequest;
 import com.junwoo.devcordbackend.domain.user.dto.SignupResponse;
 import com.junwoo.devcordbackend.domain.user.dto.UserSearchResponse;

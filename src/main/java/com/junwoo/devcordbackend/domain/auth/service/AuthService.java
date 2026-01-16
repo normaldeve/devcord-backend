@@ -1,19 +1,14 @@
 package com.junwoo.devcordbackend.domain.auth.service;
 
-import com.junwoo.devcordbackend.config.exception.ErrorCode;
+import com.junwoo.devcordbackend.common.exception.ErrorCode;
 import com.junwoo.devcordbackend.domain.auth.dto.AuthDTO;
 import com.junwoo.devcordbackend.domain.auth.exception.AuthException;
 import com.junwoo.devcordbackend.domain.auth.jwt.JwtTokenProvider;
-import com.junwoo.devcordbackend.domain.user.repository.UserRepository;
 import com.junwoo.devcordbackend.domain.user.service.UserService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Arrays;
 
 /**
  *

@@ -1,7 +1,7 @@
 package com.junwoo.devcordbackend.domain.room.dto;
 
-import com.junwoo.devcordbackend.domain.room.entity.ServerMemberEntity;
-import com.junwoo.devcordbackend.domain.room.entity.ServerRole;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerMemberEntity;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerRole;
 
 /**
  *

@@ -1,7 +1,9 @@
 package com.junwoo.devcordbackend.domain.auth.security;
 
 import com.junwoo.devcordbackend.domain.auth.dto.AuthDTO;
+import com.junwoo.devcordbackend.domain.auth.dto.SecurityPassUrlList;
 import com.junwoo.devcordbackend.domain.auth.jwt.JwtTokenProvider;
+import com.junwoo.devcordbackend.domain.auth.security.userdetail.DevcordUserDetails;
 import com.junwoo.devcordbackend.domain.user.entity.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

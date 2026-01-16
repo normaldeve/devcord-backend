@@ -1,6 +1,6 @@
 package com.junwoo.devcordbackend.domain.auth.jwt;
 
-import com.junwoo.devcordbackend.config.exception.ErrorCode;
+import com.junwoo.devcordbackend.common.exception.ErrorCode;
 import com.junwoo.devcordbackend.domain.auth.dto.AuthDTO;
 import com.junwoo.devcordbackend.domain.auth.exception.AuthException;
 import io.jsonwebtoken.Claims;

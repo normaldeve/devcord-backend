@@ -1,15 +1,15 @@
 package com.junwoo.devcordbackend.domain.room.service;
 
-import com.junwoo.devcordbackend.config.exception.ErrorCode;
+import com.junwoo.devcordbackend.common.exception.ErrorCode;
 import com.junwoo.devcordbackend.domain.room.dto.ChannelResponse;
 import com.junwoo.devcordbackend.domain.room.dto.CreateChannelRequest;
 import com.junwoo.devcordbackend.domain.room.dto.RenameChannelRequest;
 import com.junwoo.devcordbackend.domain.room.dto.ServerChannelResponse;
-import com.junwoo.devcordbackend.domain.room.entity.ChannelEntity;
-import com.junwoo.devcordbackend.domain.room.entity.ChannelType;
-import com.junwoo.devcordbackend.domain.room.entity.ServerMemberEntity;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ChannelEntity;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ChannelType;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerMemberEntity;
 import com.junwoo.devcordbackend.domain.room.exception.ChannelException;
-import com.junwoo.devcordbackend.domain.room.repository.ChannelRepository;
+import com.junwoo.devcordbackend.domain.room.repository.channel.ChannelRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

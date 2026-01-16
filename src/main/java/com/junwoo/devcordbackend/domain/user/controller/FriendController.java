@@ -1,6 +1,6 @@
 package com.junwoo.devcordbackend.domain.user.controller;
 
-import com.junwoo.devcordbackend.domain.auth.security.DevcordUserDetails;
+import com.junwoo.devcordbackend.domain.auth.security.userdetail.DevcordUserDetails;
 import com.junwoo.devcordbackend.domain.user.dto.FriendRequestResponse;
 import com.junwoo.devcordbackend.domain.user.dto.FriendResponse;
 import com.junwoo.devcordbackend.domain.user.service.FriendService;

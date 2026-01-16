@@ -1,6 +1,6 @@
 package com.junwoo.devcordbackend.domain.user.service;
 
-import com.junwoo.devcordbackend.config.exception.ErrorCode;
+import com.junwoo.devcordbackend.common.exception.ErrorCode;
 import com.junwoo.devcordbackend.domain.user.dto.FriendRequestResponse;
 import com.junwoo.devcordbackend.domain.user.dto.FriendResponse;
 import com.junwoo.devcordbackend.domain.user.entity.FriendEntity;

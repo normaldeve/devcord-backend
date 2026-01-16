@@ -1,6 +1,6 @@
 package com.junwoo.devcordbackend.domain.user.service;
 
-import com.junwoo.devcordbackend.config.exception.ErrorCode;
+import com.junwoo.devcordbackend.common.exception.ErrorCode;
 import com.junwoo.devcordbackend.domain.auth.dto.AuthDTO;
 import com.junwoo.devcordbackend.domain.user.dto.SignupRequest;
 import com.junwoo.devcordbackend.domain.user.dto.SignupResponse;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  *

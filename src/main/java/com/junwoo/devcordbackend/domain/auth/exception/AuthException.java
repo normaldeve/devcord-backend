@@ -1,7 +1,7 @@
 package com.junwoo.devcordbackend.domain.auth.exception;
 
-import com.junwoo.devcordbackend.config.exception.DomainException;
-import com.junwoo.devcordbackend.config.exception.ErrorCode;
+import com.junwoo.devcordbackend.common.exception.DomainException;
+import com.junwoo.devcordbackend.common.exception.ErrorCode;
 
 /**
  *

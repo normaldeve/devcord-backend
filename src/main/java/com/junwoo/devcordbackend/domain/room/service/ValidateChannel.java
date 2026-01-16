@@ -1,12 +1,12 @@
 package com.junwoo.devcordbackend.domain.room.service;
 
-import com.junwoo.devcordbackend.config.exception.ErrorCode;
-import com.junwoo.devcordbackend.domain.room.entity.ServerMemberEntity;
-import com.junwoo.devcordbackend.domain.room.entity.ServerRole;
+import com.junwoo.devcordbackend.common.exception.ErrorCode;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerMemberEntity;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerRole;
 import com.junwoo.devcordbackend.domain.room.exception.ChannelException;
 import com.junwoo.devcordbackend.domain.room.exception.ServerException;
-import com.junwoo.devcordbackend.domain.room.repository.ChannelRepository;
-import com.junwoo.devcordbackend.domain.room.repository.ServerMemberRepository;
+import com.junwoo.devcordbackend.domain.room.repository.channel.ChannelRepository;
+import com.junwoo.devcordbackend.domain.room.repository.channel.ServerMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

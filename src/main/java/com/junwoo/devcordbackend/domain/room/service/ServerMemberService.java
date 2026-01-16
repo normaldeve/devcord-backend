@@ -1,9 +1,9 @@
 package com.junwoo.devcordbackend.domain.room.service;
 
-import com.junwoo.devcordbackend.config.exception.ErrorCode;
+import com.junwoo.devcordbackend.common.exception.ErrorCode;
 import com.junwoo.devcordbackend.domain.room.dto.ServerMemberResponse;
 import com.junwoo.devcordbackend.domain.room.exception.ServerException;
-import com.junwoo.devcordbackend.domain.room.repository.ServerMemberRepository;
+import com.junwoo.devcordbackend.domain.room.repository.channel.ServerMemberRepository;
 import com.junwoo.devcordbackend.domain.user.entity.UserEntity;
 import com.junwoo.devcordbackend.domain.user.exception.UserException;
 import com.junwoo.devcordbackend.domain.user.repository.UserRepository;

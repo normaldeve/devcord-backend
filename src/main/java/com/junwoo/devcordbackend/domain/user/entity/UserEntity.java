@@ -1,6 +1,6 @@
 package com.junwoo.devcordbackend.domain.user.entity;
 
-import com.junwoo.devcordbackend.config.entity.BaseEntity;
+import com.junwoo.devcordbackend.common.entity.BaseEntity;
 import com.junwoo.devcordbackend.domain.user.dto.SignupRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

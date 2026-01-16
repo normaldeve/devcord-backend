@@ -1,6 +1,6 @@
 package com.junwoo.devcordbackend.domain.room.controller;
 
-import com.junwoo.devcordbackend.domain.auth.security.DevcordUserDetails;
+import com.junwoo.devcordbackend.domain.auth.security.userdetail.DevcordUserDetails;
 import com.junwoo.devcordbackend.domain.room.dto.ServerMemberResponse;
 import com.junwoo.devcordbackend.domain.room.service.ServerMemberService;
 import io.swagger.v3.oas.annotations.Operation;

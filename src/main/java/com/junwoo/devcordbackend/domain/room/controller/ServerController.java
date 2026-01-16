@@ -1,7 +1,7 @@
 package com.junwoo.devcordbackend.domain.room.controller;
 
 import com.junwoo.devcordbackend.domain.auth.dto.AuthDTO;
-import com.junwoo.devcordbackend.domain.auth.security.DevcordUserDetails;
+import com.junwoo.devcordbackend.domain.auth.security.userdetail.DevcordUserDetails;
 import com.junwoo.devcordbackend.domain.room.dto.CreateServerRequest;
 import com.junwoo.devcordbackend.domain.room.dto.ServerResponse;
 import com.junwoo.devcordbackend.domain.room.service.ServerService;

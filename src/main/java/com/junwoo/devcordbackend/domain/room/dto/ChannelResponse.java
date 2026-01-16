@@ -1,7 +1,7 @@
 package com.junwoo.devcordbackend.domain.room.dto;
 
-import com.junwoo.devcordbackend.domain.room.entity.ChannelEntity;
-import com.junwoo.devcordbackend.domain.room.entity.ChannelType;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ChannelEntity;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ChannelType;
 
 import java.time.LocalDateTime;
 

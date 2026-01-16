@@ -1,6 +1,7 @@
 package com.junwoo.devcordbackend.domain.message.entity;
 
-import com.junwoo.devcordbackend.config.entity.BaseEntity;
+import com.junwoo.devcordbackend.common.entity.BaseEntity;
+import com.junwoo.devcordbackend.domain.message.dto.SendMessageRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -33,4 +34,13 @@ public class ChannelMessageEntity extends BaseEntity {
     // 특정 메시지에 대한 답장 여부
     private Long replyTo;
 
+    public static ChannelMessageEntity createMessage(Long channelId, Long senderId, SendMessageRequest request) {
+        return ChannelMessageEntity.builder()
+                .channelId(channelId)
+                .senderId(senderId)
+                .content(request.content())
+                .pinned(false)
+                .replyTo(request.replyTo())
+                .build();
+    }
 }

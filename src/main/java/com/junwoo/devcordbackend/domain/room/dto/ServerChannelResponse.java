@@ -1,7 +1,5 @@
 package com.junwoo.devcordbackend.domain.room.dto;
 
-import com.junwoo.devcordbackend.domain.room.entity.ChannelEntity;
-
 import java.util.List;
 
 /**

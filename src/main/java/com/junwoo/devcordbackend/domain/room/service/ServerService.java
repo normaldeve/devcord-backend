@@ -2,12 +2,12 @@ package com.junwoo.devcordbackend.domain.room.service;
 
 import com.junwoo.devcordbackend.domain.room.dto.CreateServerRequest;
 import com.junwoo.devcordbackend.domain.room.dto.ServerResponse;
-import com.junwoo.devcordbackend.domain.room.entity.ChannelEntity;
-import com.junwoo.devcordbackend.domain.room.entity.ServerEntity;
-import com.junwoo.devcordbackend.domain.room.entity.ServerMemberEntity;
-import com.junwoo.devcordbackend.domain.room.repository.ChannelRepository;
-import com.junwoo.devcordbackend.domain.room.repository.ServerMemberRepository;
-import com.junwoo.devcordbackend.domain.room.repository.ServerRepository;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ChannelEntity;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerEntity;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerMemberEntity;
+import com.junwoo.devcordbackend.domain.room.repository.channel.ChannelRepository;
+import com.junwoo.devcordbackend.domain.room.repository.channel.ServerMemberRepository;
+import com.junwoo.devcordbackend.domain.room.repository.channel.ServerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
