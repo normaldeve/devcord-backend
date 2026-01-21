@@ -20,11 +20,7 @@ public record DirectMessageResponse(
         Long replyTo,
         LocalDateTime createdAt
 ) {
-    public static DirectMessageResponse from(
-            DirectMessageEntity message,
-            String senderNickname,
-            String senderProfileUrl
-    ) {
+    public static DirectMessageResponse from(DirectMessageEntity message, String senderNickname, String senderProfileUrl) {
         return new DirectMessageResponse(
                 message.getId(),
                 message.getDirectRoomId(),

@@ -6,7 +6,6 @@ package com.junwoo.devcordbackend.domain.room.dto;
  * @date 26. 1. 13.
  */
 public record CreateServerRequest(
-        String serverName,
-        String iconUrl
+        String serverName
 ) {
 }

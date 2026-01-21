@@ -3,6 +3,7 @@ package com.junwoo.devcordbackend.domain.room.controller;
 import com.junwoo.devcordbackend.domain.auth.dto.AuthDTO;
 import com.junwoo.devcordbackend.domain.auth.security.userdetail.DevcordUserDetails;
 import com.junwoo.devcordbackend.domain.room.dto.CreateServerRequest;
+import com.junwoo.devcordbackend.domain.room.dto.CreateServerResponse;
 import com.junwoo.devcordbackend.domain.room.dto.ServerResponse;
 import com.junwoo.devcordbackend.domain.room.service.ServerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,9 +13,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -42,15 +45,16 @@ public class ServerController {
             @ApiResponse(responseCode = "403", description = "인증되지 않은 사용자"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
-    @PostMapping
-    public ResponseEntity<Long> createServer(
-            @RequestBody CreateServerRequest request,
-            @AuthenticationPrincipal DevcordUserDetails userDetails
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<CreateServerResponse> createServer(
+            @RequestPart CreateServerRequest request,
+            @AuthenticationPrincipal DevcordUserDetails userDetails,
+            @RequestPart MultipartFile file
     ) {
 
         AuthDTO user = userDetails.getUser();
 
-        Long response = serverService.createServer(user.id(), request);
+        CreateServerResponse response = serverService.createServer(user.id(), request, file);
 
         return ResponseEntity.ok(response);
     }

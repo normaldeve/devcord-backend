@@ -29,7 +29,13 @@ public enum ErrorCode {
 
     ALREADY_EXISTS_NICKNAME(HttpStatus.CONFLICT.value(), "이미 존재하는 닉네임입니다"),
     ALREADY_EXISTS_EMAIL(HttpStatus.CONFLICT.value(), "이미 존재하는 이메일입니다"),
-    ;
+
+    EMPTY_FILE(HttpStatus.BAD_REQUEST.value(), "업로드할 파일이 없습니다"),
+    FILE_SIZE_EXCEEDED(HttpStatus.BAD_REQUEST.value(), "파일 크기는 10MB를 초과할 수 없습니다"),
+    INVALID_FILE_TYPE(HttpStatus.BAD_REQUEST.value(), "이미지 파일만 업로드 가능합니다"),
+    INVALID_FILE_EXTENSION(HttpStatus.BAD_REQUEST.value(), "유효하지 않은 파일 확장자입니다"),
+    FILE_UPLOAD_FAILED(HttpStatus.INTERNAL_SERVER_ERROR.value(), "파일 업로드에 실패했습니다"),
+    FILE_DELETE_FAILED(HttpStatus.INTERNAL_SERVER_ERROR.value(), "파일 삭제에 실패했습니다");
 
     private final int code;
     private final String messge;

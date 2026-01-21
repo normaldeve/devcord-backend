@@ -1,17 +1,15 @@
 package com.junwoo.devcordbackend.domain.message.controller;
 
-import com.junwoo.devcordbackend.domain.auth.security.userdetail.DevcordUserDetails;
-import com.junwoo.devcordbackend.domain.message.dto.ChannelMessageResponse;
-import com.junwoo.devcordbackend.domain.message.dto.DirectMessageResponse;
-import com.junwoo.devcordbackend.domain.message.dto.SendMessageRequest;
+import com.junwoo.devcordbackend.domain.message.dto.*;
 import com.junwoo.devcordbackend.domain.message.service.MessageService;
+import com.junwoo.devcordbackend.domain.user.dto.UserInfo;
+import com.junwoo.devcordbackend.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -24,6 +22,7 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 public class MessageController {
 
+    private final UserService userService;
     private final MessageService messageService;
     private final SimpMessagingTemplate messagingTemplate;
 
@@ -56,5 +55,40 @@ public class MessageController {
         messagingTemplate.convertAndSend("/queue/direct." + roomId, response);
 
         log.info("[WS] DM 전송 - roomId={}, senderId={}", roomId, senderId);
+    }
+
+    //===========================[키보드 타이핑 감지]===========================//
+    @MessageMapping("/direct/{roomId}/typing/start")
+    public void sendTypingEvent(
+            @DestinationVariable Long roomId,
+            @Payload TypingEventRequest event
+    ) {
+
+        Long senderId = event.senderId();
+
+        UserInfo userInfo = userService.getUserInfo(senderId);
+
+        TypingEventResponse response = new TypingEventResponse(senderId, userInfo.nickname(), roomId, true);
+
+        messagingTemplate.convertAndSend("/queue/direct." + roomId + ".typing", response);
+
+        log.info("[WS] 사용자가 타이핑 작업을 시작했습니다");
+    }
+
+    @MessageMapping("/direct/{roomId}/typing/stop")
+    public void stopTypingEvent(
+            @DestinationVariable Long roomId,
+            @Payload TypingEventRequest event
+    ) {
+
+        Long senderId = event.senderId();
+
+        UserInfo userInfo = userService.getUserInfo(senderId);
+
+        TypingEventResponse response = new TypingEventResponse(senderId, userInfo.nickname(), roomId, false);
+
+        messagingTemplate.convertAndSend("/queue/direct." + roomId + ".typing", response);
+
+        log.info("[WS] 사용자가 타이핑 작업을 멈추었습니다");
     }
 }

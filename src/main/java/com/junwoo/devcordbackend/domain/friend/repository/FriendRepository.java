@@ -1,7 +1,7 @@
-package com.junwoo.devcordbackend.domain.user.repository;
+package com.junwoo.devcordbackend.domain.friend.repository;
 
-import com.junwoo.devcordbackend.domain.user.entity.FriendEntity;
-import com.junwoo.devcordbackend.domain.user.entity.FriendStatus;
+import com.junwoo.devcordbackend.domain.friend.entity.FriendEntity;
+import com.junwoo.devcordbackend.domain.friend.entity.FriendStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

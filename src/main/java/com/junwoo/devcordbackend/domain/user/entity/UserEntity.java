@@ -45,4 +45,8 @@ public class UserEntity extends BaseEntity {
                 .role(Role.USER)
                 .build();
     }
+
+    public void updateProfile(String newProfileUrl) {
+        this.profileUrl = newProfileUrl;
+    }
 }

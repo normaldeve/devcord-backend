@@ -1,4 +1,4 @@
-package com.junwoo.devcordbackend.domain.user.entity;
+package com.junwoo.devcordbackend.domain.friend.entity;
 
 import com.junwoo.devcordbackend.common.entity.BaseEntity;
 import jakarta.persistence.Entity;

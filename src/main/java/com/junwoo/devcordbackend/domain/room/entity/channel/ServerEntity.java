@@ -26,10 +26,10 @@ public class ServerEntity extends BaseEntity {
 
     private String iconUrl;
 
-    public static ServerEntity createServer(CreateServerRequest request) {
+    public static ServerEntity createServer(CreateServerRequest request, String iconUrl) {
         return ServerEntity.builder()
                 .name(request.serverName())
-                .iconUrl(request.iconUrl())
+                .iconUrl(iconUrl)
                 .build();
     }
 }

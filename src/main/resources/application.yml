@@ -19,6 +19,11 @@ spring:
       hibernate:
         format_sql: true
 
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 2MB
+
 logging:
   level:
     com.junwoo.devcordbackend: info
@@ -38,3 +43,15 @@ jwt:
 
 cors:
   allowed-origins: ${FRONTEND_ORIGIN}
+
+cloud:
+  aws:
+    credentials:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    s3:
+      bucket: ${AWS_S3_BUCKET}

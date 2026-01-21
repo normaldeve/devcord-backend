@@ -1,6 +1,9 @@
 package com.junwoo.devcordbackend.domain.room.service;
 
+import com.junwoo.devcordbackend.domain.image.ImageDirectory;
+import com.junwoo.devcordbackend.domain.image.ImageUploader;
 import com.junwoo.devcordbackend.domain.room.dto.CreateServerRequest;
+import com.junwoo.devcordbackend.domain.room.dto.CreateServerResponse;
 import com.junwoo.devcordbackend.domain.room.dto.ServerResponse;
 import com.junwoo.devcordbackend.domain.room.entity.channel.ChannelEntity;
 import com.junwoo.devcordbackend.domain.room.entity.channel.ServerEntity;
@@ -12,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,13 +30,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ServerService {
 
+    private final ImageUploader imageUploader;
     private final ServerRepository serverRepository;
     private final ChannelRepository channelRepository;
     private final ServerMemberRepository serverMemberRepository;
 
-    public Long createServer(Long userId, CreateServerRequest request) {
+    public CreateServerResponse createServer(Long userId, CreateServerRequest request, MultipartFile file) {
 
-        ServerEntity server = serverRepository.save(ServerEntity.createServer(request));
+        String iconUrl = imageUploader.upload(file, ImageDirectory.SERVER);
+
+        ServerEntity server = serverRepository.save(ServerEntity.createServer(request, iconUrl));
 
         // 기본 텍스트 채널 생성
         ChannelEntity textChannel = ChannelEntity.createTextChannel(server.getId());
@@ -48,7 +55,7 @@ public class ServerService {
 
         log.info("[ServerService] 서버 생성 완료 - serverId: {}, creatorId: {}", server.getId(), userId);
 
-        return server.getId();
+        return CreateServerResponse.from(server);
 
     }
 

@@ -12,10 +12,12 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -62,5 +64,20 @@ public class UserController {
         List<UserSearchResponse> result = userService.searchUsers(myId, keyword);
 
         return ResponseEntity.ok(result);
+    }
+
+    @Operation(
+            summary = "프로필 이미지 변경",
+            description = "사용자의 프로필 이미지를 변경합니다. Multipart 형식으로 이미지 파일을 업로드합니다."
+    )
+    @PatchMapping(value = "/me/profile-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> updateProfileImage(
+            @AuthenticationPrincipal DevcordUserDetails userDetails,
+            @RequestPart("file") MultipartFile file
+    ) {
+        Long userId = userDetails.getUser().id();
+        String newImageUrl = userService.updateProfile(userId, file);
+
+        return ResponseEntity.ok(newImageUrl);
     }
 }

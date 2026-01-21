@@ -1,9 +1,9 @@
-package com.junwoo.devcordbackend.domain.user.controller;
+package com.junwoo.devcordbackend.domain.friend.controller;
 
 import com.junwoo.devcordbackend.domain.auth.security.userdetail.DevcordUserDetails;
 import com.junwoo.devcordbackend.domain.user.dto.FriendRequestResponse;
 import com.junwoo.devcordbackend.domain.user.dto.FriendResponse;
-import com.junwoo.devcordbackend.domain.user.service.FriendService;
+import com.junwoo.devcordbackend.domain.friend.service.FriendService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

@@ -8,14 +8,14 @@ import com.junwoo.devcordbackend.domain.message.entity.ChannelMessageEntity;
 import com.junwoo.devcordbackend.domain.message.entity.DirectMessageEntity;
 import com.junwoo.devcordbackend.domain.message.repository.ChannelMessageRepository;
 import com.junwoo.devcordbackend.domain.message.repository.DirectMessageRepository;
-import com.junwoo.devcordbackend.domain.room.repository.channel.ServerMemberRepository;
-import com.junwoo.devcordbackend.domain.room.repository.direct.DirectRoomMemberRepository;
-import com.junwoo.devcordbackend.domain.room.repository.direct.DirectRoomRepository;
 import com.junwoo.devcordbackend.domain.user.entity.UserEntity;
 import com.junwoo.devcordbackend.domain.user.exception.UserException;
 import com.junwoo.devcordbackend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,5 +66,24 @@ public class MessageService {
         log.info("[MessageService] DM 전송 - directRoomId: {}, senderId: {}", directRoomId, senderId);
 
         return DirectMessageResponse.from(saved, sender.getNickname(), sender.getProfileUrl());
+    }
+
+    @Transactional(readOnly = true)
+    public Slice<ChannelMessageResponse> getChannelMessages(Long channelId, Long lastMessageId, int size) {
+
+        Pageable pageable = PageRequest.of(0, size);
+
+        return channelMessageRepository.findChannelMessages(channelId, lastMessageId, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Slice<DirectMessageResponse> getDirectMessages(
+            Long roomId,
+            Long lastMessageId,
+            int size
+    ) {
+        Pageable pageable = PageRequest.of(0, size);
+
+        return directMessageRepository.findMessages(roomId, lastMessageId, pageable);
     }
 }

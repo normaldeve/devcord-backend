@@ -2,8 +2,11 @@ package com.junwoo.devcordbackend.domain.user.service;
 
 import com.junwoo.devcordbackend.common.exception.ErrorCode;
 import com.junwoo.devcordbackend.domain.auth.dto.AuthDTO;
+import com.junwoo.devcordbackend.domain.image.ImageDirectory;
+import com.junwoo.devcordbackend.domain.image.ImageUploader;
 import com.junwoo.devcordbackend.domain.user.dto.SignupRequest;
 import com.junwoo.devcordbackend.domain.user.dto.SignupResponse;
+import com.junwoo.devcordbackend.domain.user.dto.UserInfo;
 import com.junwoo.devcordbackend.domain.user.dto.UserSearchResponse;
 import com.junwoo.devcordbackend.domain.user.entity.UserEntity;
 import com.junwoo.devcordbackend.domain.user.exception.UserException;
@@ -14,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,6 +28,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
@@ -31,8 +36,8 @@ public class UserService {
     private final UserValidator userValidator;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ImageUploader imageUploader;
 
-    @Transactional
     public SignupResponse signup(SignupRequest request) {
 
         userValidator.checkEmailDuplicate(request.email());
@@ -55,6 +60,27 @@ public class UserService {
         );
     }
 
+    public String updateProfile(Long userId, MultipartFile file) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserException(ErrorCode.CANNOT_FOUND_USER));
+
+        String newImageUrl = imageUploader.upload(file, ImageDirectory.PROFILE);
+
+        if (user.getProfileUrl() != null && !user.getProfileUrl().isEmpty()) {
+            try {
+                imageUploader.delete(user.getProfileUrl());
+            } catch (Exception e) {
+                log.error("[UserService] 사용자 프로필 삭제 실패 - url: {} - error: {}", user.getProfileUrl(), e.getMessage(), e);
+            }
+        }
+
+        user.updateProfile(newImageUrl);
+
+        log.info("[UserService] 프로필 이미지 변경 - userId: {}, imageUrl: {}", userId, newImageUrl);
+
+        return newImageUrl;
+    }
+
     @Transactional(readOnly = true)
     public AuthDTO findByEmail(String email) {
         UserEntity userEntity = userRepository.findByEmail(email)
@@ -69,4 +95,14 @@ public class UserService {
                 .map(userMapper::toUserSearchRespose)
                 .toList();
     }
+
+    @Transactional(readOnly = true)
+    public UserInfo getUserInfo(Long userId) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserException(ErrorCode.CANNOT_FOUND_USER));
+
+        return UserInfo.from(user);
+    }
+
+
 }

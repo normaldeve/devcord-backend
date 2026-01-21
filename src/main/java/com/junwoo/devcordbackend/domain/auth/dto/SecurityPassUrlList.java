@@ -16,6 +16,7 @@ public final class SecurityPassUrlList {
             "/v3/api-docs/**",
             "/api/auth/refresh",
             "/api/auth/logout",
-            "/ws/**"
+            "/ws/**",
+            "/api/notifications/**"
     };
 }

@@ -1,4 +1,4 @@
-package com.junwoo.devcordbackend.domain.user.entity;
+package com.junwoo.devcordbackend.domain.friend.entity;
 
 /**
  *

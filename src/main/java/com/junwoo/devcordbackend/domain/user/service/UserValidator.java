@@ -1,8 +1,8 @@
 package com.junwoo.devcordbackend.domain.user.service;
 
 import com.junwoo.devcordbackend.common.exception.ErrorCode;
-import com.junwoo.devcordbackend.domain.user.entity.FriendStatus;
-import com.junwoo.devcordbackend.domain.user.exception.FriendException;
+import com.junwoo.devcordbackend.domain.friend.entity.FriendStatus;
+import com.junwoo.devcordbackend.domain.friend.exception.FriendException;
 import com.junwoo.devcordbackend.domain.user.exception.UserException;
 import com.junwoo.devcordbackend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

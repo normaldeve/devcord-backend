@@ -1,7 +1,7 @@
 package com.junwoo.devcordbackend.domain.user.dto;
 
-import com.junwoo.devcordbackend.domain.user.entity.FriendEntity;
-import com.junwoo.devcordbackend.domain.user.entity.FriendStatus;
+import com.junwoo.devcordbackend.domain.friend.entity.FriendEntity;
+import com.junwoo.devcordbackend.domain.friend.entity.FriendStatus;
 import com.junwoo.devcordbackend.domain.user.entity.UserEntity;
 
 import java.time.LocalDateTime;

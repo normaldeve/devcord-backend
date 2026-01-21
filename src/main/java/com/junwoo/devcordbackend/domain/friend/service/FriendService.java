@@ -1,16 +1,19 @@
-package com.junwoo.devcordbackend.domain.user.service;
+package com.junwoo.devcordbackend.domain.friend.service;
 
 import com.junwoo.devcordbackend.common.exception.ErrorCode;
+import com.junwoo.devcordbackend.domain.notification.dto.FriendRequestSentEvent;
 import com.junwoo.devcordbackend.domain.user.dto.FriendRequestResponse;
 import com.junwoo.devcordbackend.domain.user.dto.FriendResponse;
-import com.junwoo.devcordbackend.domain.user.entity.FriendEntity;
-import com.junwoo.devcordbackend.domain.user.entity.FriendStatus;
+import com.junwoo.devcordbackend.domain.friend.entity.FriendEntity;
+import com.junwoo.devcordbackend.domain.friend.entity.FriendStatus;
 import com.junwoo.devcordbackend.domain.user.entity.UserEntity;
-import com.junwoo.devcordbackend.domain.user.exception.FriendException;
-import com.junwoo.devcordbackend.domain.user.repository.FriendRepository;
+import com.junwoo.devcordbackend.domain.friend.exception.FriendException;
+import com.junwoo.devcordbackend.domain.friend.repository.FriendRepository;
 import com.junwoo.devcordbackend.domain.user.repository.UserRepository;
+import com.junwoo.devcordbackend.domain.user.service.UserValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +36,7 @@ public class FriendService {
     private final UserValidator userValidator;
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     public void sendFriendRequest(Long requesterId, Long receiverId) {
 
@@ -53,6 +57,8 @@ public class FriendService {
 
         FriendEntity request = FriendEntity.request(requesterId, receiverId);
         friendRepository.save(request);
+
+        eventPublisher.publishEvent(new FriendRequestSentEvent(requesterId, receiverId));
 
         log.info("[FriendService] 친구 요청 전송 - from: {}, to: {}", requesterId, receiverId);
 

@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -79,6 +80,18 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(exception.getErrorCode().getCode())
+                .body(response);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ErrorResponse> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException exception) {
+
+        log.error("[GlobalException] 파일 크기 범위 초과: {}", exception.getMessage(), exception);
+
+        ErrorResponse response = new ErrorResponse(exception, HttpStatus.PAYLOAD_TOO_LARGE.value());
+
+        return ResponseEntity
+                .status(response.getCode())
                 .body(response);
     }
 }
