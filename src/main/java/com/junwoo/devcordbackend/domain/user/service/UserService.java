@@ -2,12 +2,16 @@ package com.junwoo.devcordbackend.domain.user.service;
 
 import com.junwoo.devcordbackend.common.exception.ErrorCode;
 import com.junwoo.devcordbackend.domain.auth.dto.AuthDTO;
+import com.junwoo.devcordbackend.domain.friend.service.FriendService;
 import com.junwoo.devcordbackend.domain.image.ImageDirectory;
 import com.junwoo.devcordbackend.domain.image.ImageUploader;
-import com.junwoo.devcordbackend.domain.user.dto.SignupRequest;
-import com.junwoo.devcordbackend.domain.user.dto.SignupResponse;
-import com.junwoo.devcordbackend.domain.user.dto.UserInfo;
-import com.junwoo.devcordbackend.domain.user.dto.UserSearchResponse;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerEntity;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerMemberEntity;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerRole;
+import com.junwoo.devcordbackend.domain.room.repository.channel.ServerMemberRepository;
+import com.junwoo.devcordbackend.domain.room.repository.channel.ServerRepository;
+import com.junwoo.devcordbackend.domain.room.service.ServerService;
+import com.junwoo.devcordbackend.domain.user.dto.*;
 import com.junwoo.devcordbackend.domain.user.entity.UserEntity;
 import com.junwoo.devcordbackend.domain.user.exception.UserException;
 import com.junwoo.devcordbackend.domain.user.mapper.UserMapper;
@@ -20,6 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *

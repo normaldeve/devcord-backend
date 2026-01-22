@@ -2,6 +2,8 @@ package com.junwoo.devcordbackend.domain.user.dto;
 
 import com.junwoo.devcordbackend.domain.user.entity.UserEntity;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author junnukim1007gmail.com
@@ -9,11 +11,13 @@ import com.junwoo.devcordbackend.domain.user.entity.UserEntity;
  */
 public record UserInfo(
         Long userId,
+        String email,
         String nickname,
-        String profileUrl
+        String profileUrl,
+        LocalDateTime createdAt
 ) {
 
     public static UserInfo from(UserEntity user) {
-        return new UserInfo(user.getId(), user.getNickname(), user.getProfileUrl());
+        return new UserInfo(user.getId(), user.getEmail(), user.getNickname(), user.getProfileUrl(), user.getCreatedAt());
     }
 }

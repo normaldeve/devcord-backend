@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -67,5 +69,23 @@ public class ServerService {
     public List<ServerResponse> getMyServers(Long userId) {
 
         return serverRepository.findMyServers(userId);
+    }
+
+    @Transactional(readOnly = true)
+    public Set<Long> findCommonServerIds(Long viewerId, Long targetUserId) {
+
+        Set<Long> viewerServers = serverMemberRepository.findByUserId(viewerId)
+                .stream()
+                .map(ServerMemberEntity::getServerId)
+                .collect(Collectors.toSet());
+
+        Set<Long> targetServers = serverMemberRepository.findByUserId(targetUserId)
+                .stream()
+                .map(ServerMemberEntity::getServerId)
+                .collect(Collectors.toSet());
+
+        viewerServers.retainAll(targetServers);
+
+        return viewerServers;
     }
 }

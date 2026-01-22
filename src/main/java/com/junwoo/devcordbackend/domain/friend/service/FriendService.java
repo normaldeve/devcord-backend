@@ -18,8 +18,10 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -132,5 +134,18 @@ public class FriendService {
         return users.stream()
                 .map(user -> FriendResponse.from(user, false))
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Set<Long> findMutualFriendIds(Long viewerId, Long targetUserId) {
+
+        List<Long> viewFriends = friendRepository.findAcceptedFriendIds(viewerId);
+        List<Long> targetFriends = friendRepository.findAcceptedFriendIds(targetUserId);
+
+        Set<Long> mutual = new HashSet<>(viewFriends);
+        // 공통된 ID만 남게 됩니다.
+        mutual.retainAll(targetFriends);
+
+        return mutual;
     }
 }
