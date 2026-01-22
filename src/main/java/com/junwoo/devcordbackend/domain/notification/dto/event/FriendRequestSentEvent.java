@@ -1,4 +1,4 @@
-package com.junwoo.devcordbackend.domain.notification.dto;
+package com.junwoo.devcordbackend.domain.notification.dto.event;
 
 /**
  *

@@ -28,7 +28,7 @@ logging:
   level:
     com.junwoo.devcordbackend: info
     org.hibernate.sql: info
-    org.springframework.security: trace
+    org.springframework.security: info
 
 springdoc:
   packages-to-scan: com.junwoo.devcordbackend

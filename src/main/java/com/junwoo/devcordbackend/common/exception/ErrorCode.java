@@ -26,6 +26,9 @@ public enum ErrorCode {
     FRIEND_BLOCKED(HttpStatus.BAD_REQUEST.value(), "친구 차단 상태입니다"),
     CANNOT_FOUND_FRIEND_REQUEST(HttpStatus.BAD_REQUEST.value(), "존재하지 않는 친구 요청입니다"),
     ALREADY_COMPLETED_FRIEND_REQUEST(HttpStatus.BAD_REQUEST.value(), "이미 처리된 친구 요청입니다"),
+    ALREADY_SERVER_MEMBER(HttpStatus.BAD_REQUEST.value(), "이미 서버에 속한 멤버입니다"),
+    DUPLICATE_SERVER_INVITE(HttpStatus.BAD_REQUEST.value(), "중복된 서버 초대 요청입니다."),
+    SERVER_INVITE_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "서버 초대를 찾을 수 없습니다"),
 
     ALREADY_EXISTS_NICKNAME(HttpStatus.CONFLICT.value(), "이미 존재하는 닉네임입니다"),
     ALREADY_EXISTS_EMAIL(HttpStatus.CONFLICT.value(), "이미 존재하는 이메일입니다"),

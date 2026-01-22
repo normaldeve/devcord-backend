@@ -1,7 +1,8 @@
 package com.junwoo.devcordbackend.domain.notification.service;
 
 import com.junwoo.devcordbackend.domain.notification.config.SseEmitterManager;
-import com.junwoo.devcordbackend.domain.notification.dto.FriendRequestSentEvent;
+import com.junwoo.devcordbackend.domain.notification.dto.event.FriendRequestAcceptedEvent;
+import com.junwoo.devcordbackend.domain.notification.dto.event.FriendRequestSentEvent;
 import com.junwoo.devcordbackend.domain.notification.entity.NotificationEntity;
 import com.junwoo.devcordbackend.domain.notification.entity.NotificationSubType;
 import com.junwoo.devcordbackend.domain.notification.entity.NotificationType;
@@ -43,7 +44,7 @@ public class FriendNotificationListener {
                 "USER",
                 event.requesterId(),
                 null,
-                "새 친구 요청이 도착했습니다."
+                "님의 새 친구 요청을 보내셨습니다."
         );
 
         UserInfo senderInfo = userService.getUserInfo(event.requesterId());
@@ -51,5 +52,29 @@ public class FriendNotificationListener {
         notificationRepository.save(notification);
 
         sseEmitterManager.send(event.receiverId(), notification, senderInfo);
+    }
+
+    @Async
+    @TransactionalEventListener(
+            phase = TransactionPhase.AFTER_COMMIT
+    )
+    public void handleFriendRequestAccepted(FriendRequestAcceptedEvent event) {
+
+        NotificationEntity notification = NotificationEntity.create(
+                event.requesterId(),
+                event.accepterId(),
+                NotificationType.INVITE,
+                NotificationSubType.FRIEND_ACCEPTED,
+                "USER",
+                event.accepterId(),
+                null,
+                "님이 친구 요청을 수락했습니다"
+        );
+
+        notificationRepository.save(notification);
+
+        UserInfo senderInfo = userService.getUserInfo(event.requesterId());
+
+        sseEmitterManager.send(event.requesterId(), notification, senderInfo);
     }
 }

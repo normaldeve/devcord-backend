@@ -37,7 +37,11 @@ public class ServerService {
 
     public CreateServerResponse createServer(Long userId, CreateServerRequest request, MultipartFile file) {
 
-        String iconUrl = imageUploader.upload(file, ImageDirectory.SERVER);
+        String iconUrl = null;
+
+        if (file != null) {
+            iconUrl = imageUploader.upload(file, ImageDirectory.SERVER);
+        }
 
         ServerEntity server = serverRepository.save(ServerEntity.createServer(request, iconUrl));
 

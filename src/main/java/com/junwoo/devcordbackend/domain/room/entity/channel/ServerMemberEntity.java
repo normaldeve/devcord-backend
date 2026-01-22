@@ -34,4 +34,12 @@ public class ServerMemberEntity extends BaseEntity {
                 .role(ServerRole.CHANNEL_MANAGER)
                 .build();
     }
+
+    public static ServerMemberEntity createServerMember(Long serverId, Long userId) {
+        return ServerMemberEntity.builder()
+                .serverId(serverId)
+                .userId(userId)
+                .role(ServerRole.MEMBER)
+                .build();
+    }
 }

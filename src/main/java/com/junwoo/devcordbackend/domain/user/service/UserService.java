@@ -103,6 +103,4 @@ public class UserService {
 
         return UserInfo.from(user);
     }
-
-
 }

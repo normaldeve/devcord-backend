@@ -1,7 +1,8 @@
 package com.junwoo.devcordbackend.domain.friend.service;
 
 import com.junwoo.devcordbackend.common.exception.ErrorCode;
-import com.junwoo.devcordbackend.domain.notification.dto.FriendRequestSentEvent;
+import com.junwoo.devcordbackend.domain.notification.dto.event.FriendRequestAcceptedEvent;
+import com.junwoo.devcordbackend.domain.notification.dto.event.FriendRequestSentEvent;
 import com.junwoo.devcordbackend.domain.user.dto.FriendRequestResponse;
 import com.junwoo.devcordbackend.domain.user.dto.FriendResponse;
 import com.junwoo.devcordbackend.domain.friend.entity.FriendEntity;
@@ -94,6 +95,8 @@ public class FriendService {
         FriendEntity reverse = FriendEntity.reverseRequest(receiverId, requesterId);
 
         friendRepository.save(reverse);
+
+        eventPublisher.publishEvent(new FriendRequestAcceptedEvent(receiverId, requesterId));
 
         log.info("[FriendService] 친구 요청 수락 - {} <-> {}", requesterId, receiverId);
     }
