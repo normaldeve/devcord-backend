@@ -2,7 +2,7 @@ package com.junwoo.devcordbackend.domain.room.service;
 
 import com.junwoo.devcordbackend.common.exception.ErrorCode;
 import com.junwoo.devcordbackend.domain.notification.dto.event.ServerInviteCreatedEvent;
-import com.junwoo.devcordbackend.domain.room.controller.ServerInviteEntity;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerInviteEntity;
 import com.junwoo.devcordbackend.domain.room.dto.ServerInviteResponse;
 import com.junwoo.devcordbackend.domain.room.entity.channel.InviteStatus;
 import com.junwoo.devcordbackend.domain.room.entity.channel.ServerEntity;

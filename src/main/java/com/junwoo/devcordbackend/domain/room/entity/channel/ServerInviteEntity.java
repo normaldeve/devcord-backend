@@ -1,8 +1,6 @@
-package com.junwoo.devcordbackend.domain.room.controller;
+package com.junwoo.devcordbackend.domain.room.entity.channel;
 
 import com.junwoo.devcordbackend.common.entity.BaseEntity;
-import com.junwoo.devcordbackend.domain.room.entity.channel.InviteStatus;
-import com.junwoo.devcordbackend.domain.room.entity.channel.ServerEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

@@ -1,8 +1,7 @@
 package com.junwoo.devcordbackend.domain.room.dto;
 
-import com.junwoo.devcordbackend.domain.room.controller.ServerInviteEntity;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerInviteEntity;
 import com.junwoo.devcordbackend.domain.room.entity.channel.ServerEntity;
-import com.junwoo.devcordbackend.domain.user.dto.UserInfo;
 
 import java.time.LocalDateTime;
 

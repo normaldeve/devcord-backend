@@ -1,6 +1,6 @@
 package com.junwoo.devcordbackend.domain.room.repository;
 
-import com.junwoo.devcordbackend.domain.room.controller.ServerInviteEntity;
+import com.junwoo.devcordbackend.domain.room.entity.channel.ServerInviteEntity;
 import com.junwoo.devcordbackend.domain.room.entity.channel.InviteStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
